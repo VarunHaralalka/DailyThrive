@@ -1,37 +1,52 @@
 import 'package:flutter/material.dart';
-import 'signup_login.dart';
-import 'signup.dart';
-import 'login.dart';
+import 'package:firebase_core/firebase_core.dart'; // Import Firebase Core
+import 'Login&Signup/login.dart';
+import 'Login&Signup/signup.dart';
 import 'homepage.dart';
-import 'day_planner_screen.dart';
-import 'expenses.dart';
-import 'attendance.dart';
-import 'wellness.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'profile.dart';
+import 'dailyPlanner/day_planner_screen.dart';
+import 'Attendance/attendance.dart';
+import 'budgeting/expenses.dart';
+import 'Profile/profile.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(
-    MaterialApp(
-      initialRoute: HomePage.id,
-      routes: {
-        SignupLogin.id: (context) => SignupLogin(),
-        SignupPage.id: (context) => SignupPage(),
-        LoginPage.id: (context) => LoginPage(),
-        HomePage.id: (context) => HomePage(),
-        DayPlannerScreen.id: (context) => DayPlannerScreen(),
-        ExpensesPage.id: (context) => ExpensesPage(),
-        WellnessPage.id: (context) => WellnessPage(),
-        StudentProfile.id: (context) => StudentProfile(),
-        AttendanceForm.id: (context) => AttendanceForm(),
-      },
+  WidgetsFlutterBinding.ensureInitialized(); // Ensures binding is initialized
+  await Firebase.initializeApp(); // Initializes Firebase
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Student Companion',
       theme: ThemeData(
-        brightness: Brightness.light,
-        primaryColor: Colors.indigo,
+        primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: Colors.grey.shade100,
+        fontFamily: 'Roboto',
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.blue.shade800,
+          elevation: 4,
+          centerTitle: true,
+        ),
+        cardTheme: CardTheme(
+          elevation: 2,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
       ),
-      debugShowCheckedModeBanner: false,
-    ),
-  );
+      initialRoute: '/login',
+      routes: {
+        '/login': (context) => const Login(),
+        '/signup': (context) => const SignUp(),
+        '/home': (context) => const HomePage(),
+        '/planner': (context) => const DayPlannerScreen(),
+        '/attendance': (context) => const Attendance(),
+        '/expenses': (context) => const ExpensesPage(),
+        '/profile': (context) => const Profile(),
+      },
+    );
+  }
 }
