@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'HelperFunctions.dart';
 import 'DeleteEntry.dart';
+import 'EditEntry.dart';
 
 class ExpensesTable extends StatelessWidget {
   final String userId;
@@ -100,7 +101,7 @@ class ExpensesTable extends StatelessWidget {
                             icon: const Icon(Icons.edit, size: 18),
                             color: Colors.blue,
                             onPressed: () =>
-                                showEditDialog(context, doc, userId),
+                                editEntryDialog(context, userId, doc),
                           ),
                           const SizedBox(width: 4),
                           IconButton(

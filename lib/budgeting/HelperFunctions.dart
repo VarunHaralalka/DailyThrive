@@ -30,15 +30,3 @@ Color getCategoryColor(String category) {
   return colorMap[normalizedCategory] ??
       Colors.primaries[normalizedCategory.hashCode % Colors.primaries.length];
 }
-
-void showEditDialog(
-    BuildContext context, QueryDocumentSnapshot doc, String userId) {
-  showDialog(
-    context: context,
-    builder: (context) => EditEntry(
-      userId: userId,
-      docId: doc.id,
-      currentData: doc.data() as Map<String, dynamic>,
-    ),
-  );
-}

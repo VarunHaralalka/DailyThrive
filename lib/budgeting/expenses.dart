@@ -71,10 +71,7 @@ class _ExpensesPageState extends State<ExpensesPage> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => showDialog(
-          context: context,
-          builder: (context) => AddEntry(userId: currentUser?.uid ?? ""),
-        ),
+        onPressed: () => addEntry(context, currentUser?.uid ?? ""),
         backgroundColor: Colors.blue.shade800,
         child: const Icon(Icons.add, color: Colors.white),
       ),
