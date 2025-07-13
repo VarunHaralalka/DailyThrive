@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'to_do_list_card.dart';
 import '../authentication/auth_helper.dart';
 import '../appbar.dart';
+import '../ConfirmationModal.dart';
 
 class DayPlannerScreen extends StatefulWidget {
   static const id = 'DayPlannerScreen';
@@ -15,7 +15,6 @@ class DayPlannerScreen extends StatefulWidget {
 
 class _DayPlannerScreenState extends State<DayPlannerScreen> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   String newTask = "";
   String userName = "";
@@ -178,7 +177,17 @@ class _DayPlannerScreenState extends State<DayPlannerScreen> {
                       var docId = tasks[index].id;
                       return ToDoListCard(
                         text: taskText,
-                        onDelete: () => _deleteTask(docId),
+                        onDelete: () async {
+                          final confirmed = await showConfirmationDialog(
+                            context,
+                            content:
+                                'Are you sure you want to delete this task?',
+                            confirmLabel: 'Delete',
+                          );
+                          if (confirmed == true) {
+                            _deleteTask(docId);
+                          }
+                        },
                       );
                     },
                   );

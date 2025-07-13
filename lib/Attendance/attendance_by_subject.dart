@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../ConfirmationModal.dart';
 
 void showAttendanceBySubjectDialog(BuildContext context, String userId) async {
   final subjRef = FirebaseFirestore.instance
@@ -83,15 +84,34 @@ void showAttendanceBySubjectDialog(BuildContext context, String userId) async {
                                   children: [
                                     IconButton(
                                       icon: const Icon(Icons.edit, size: 18),
-                                      onPressed: () =>
+                                      onPressed: () async {
+                                        final confirmed =
+                                            await showConfirmationDialog(
+                                          context,
+                                          content:
+                                              'Are you sure you want to edit this record?',
+                                          confirmLabel: 'Edit',
+                                        );
+                                        if (confirmed == true) {
                                           _showEditAttendanceDialog(context,
-                                              userId, selectedSubject!, doc),
+                                              userId, selectedSubject!, doc);
+                                        }
+                                      },
                                     ),
                                     IconButton(
                                       icon: const Icon(Icons.delete,
                                           size: 18, color: Colors.red),
                                       onPressed: () async {
-                                        await doc.reference.delete();
+                                        final confirmed =
+                                            await showConfirmationDialog(
+                                          context,
+                                          content:
+                                              'Are you sure you want to delete this record?',
+                                          confirmLabel: 'Delete',
+                                        );
+                                        if (confirmed == true) {
+                                          await doc.reference.delete();
+                                        }
                                       },
                                     ),
                                   ],

@@ -185,14 +185,14 @@ class _SignUpState extends State<SignUp> {
                         Navigator.pushReplacementNamed(context, '/login'),
                     child: const Text(
                       'Already have an account? Login',
-                      style: TextStyle(color: Colors.white70),
+                      style: TextStyle(color: Colors.white70, fontSize: 20),
                     ),
                   ),
                   const SizedBox(height: 12),
                   // Error Message
                   Text(
                     error,
-                    style: const TextStyle(color: Colors.red, fontSize: 14),
+                    style: const TextStyle(color: Colors.red, fontSize: 22),
                   ),
                 ],
               ),

@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'HelperFunctions.dart';
 import 'DeleteEntry.dart';
 import 'EditEntry.dart';
+import '../ConfirmationModal.dart';
 
 class ExpensesTable extends StatelessWidget {
   final String userId;
@@ -100,8 +101,17 @@ class ExpensesTable extends StatelessWidget {
                             constraints: const BoxConstraints(),
                             icon: const Icon(Icons.edit, size: 18),
                             color: Colors.blue,
-                            onPressed: () =>
-                                editEntryDialog(context, userId, doc),
+                            onPressed: () async {
+                              final confirmed = await showConfirmationDialog(
+                                context,
+                                content:
+                                    'Are you sure you want to edit this expense?',
+                                confirmLabel: 'Edit',
+                              );
+                              if (confirmed == true) {
+                                editEntryDialog(context, userId, doc);
+                              }
+                            },
                           ),
                           const SizedBox(width: 4),
                           IconButton(
@@ -109,7 +119,17 @@ class ExpensesTable extends StatelessWidget {
                             constraints: const BoxConstraints(),
                             icon: const Icon(Icons.delete, size: 18),
                             color: Colors.red,
-                            onPressed: () => deleteExpense(doc.id, userId),
+                            onPressed: () async {
+                              final confirmed = await showConfirmationDialog(
+                                context,
+                                content:
+                                    'Are you sure you want to delete this expense?',
+                                confirmLabel: 'Delete',
+                              );
+                              if (confirmed == true) {
+                                deleteExpense(doc.id, userId);
+                              }
+                            },
                           ),
                         ],
                       ),

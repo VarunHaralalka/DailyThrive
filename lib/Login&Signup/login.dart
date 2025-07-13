@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../authentication/auth.dart';
 
 class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+  const Login({super.key});
 
   @override
   State<Login> createState() => _LoginState();
@@ -98,7 +98,6 @@ class _LoginState extends State<Login> {
                       if (result == null) {
                         setState(() => error = 'Invalid credentials');
                       } else {
-                        // Navigate to home on success!
                         Navigator.pushReplacementNamed(context, '/home');
                       }
                     }
@@ -117,7 +116,7 @@ class _LoginState extends State<Login> {
                     Navigator.pushReplacementNamed(context, '/signup'),
                 child: const Text(
                   'New user? Create account',
-                  style: TextStyle(color: Colors.white70),
+                  style: TextStyle(color: Colors.white70, fontSize: 20),
                 ),
               ),
               const SizedBox(height: 12),
@@ -125,7 +124,7 @@ class _LoginState extends State<Login> {
               // Error Message
               Text(
                 error,
-                style: const TextStyle(color: Colors.red, fontSize: 14),
+                style: const TextStyle(color: Colors.red, fontSize: 22),
               ),
             ],
           ),

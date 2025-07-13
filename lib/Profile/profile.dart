@@ -68,7 +68,8 @@ class _ProfileState extends State<Profile> {
                 onPressed: () async {
                   await _auth.signOut();
                   if (!mounted) return;
-                  Navigator.pushReplacementNamed(context, '/login');
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, '/login', (route) => false);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.red.shade700,

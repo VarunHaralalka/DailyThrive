@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 void showAttendanceMarkDialog(BuildContext context, String userId) async {
   final subjRef = FirebaseFirestore.instance
@@ -35,18 +36,24 @@ void showAttendanceMarkDialog(BuildContext context, String userId) async {
                 }).toList(),
               ),
               const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () async {
+              ListTile(
+                leading: const Icon(Icons.calendar_today),
+                title: Text(
+                  DateFormat('dd-MM-yyyy').format(selectedDate),
+                  style: const TextStyle(fontWeight: FontWeight.w500),
+                ),
+                trailing: const Icon(Icons.edit_calendar),
+                onTap: () async {
                   final pickedDate = await showDatePicker(
                     context: context,
                     initialDate: selectedDate,
                     firstDate: DateTime(2000),
                     lastDate: DateTime(2100),
                   );
-                  if (pickedDate != null)
+                  if (pickedDate != null) {
                     setState(() => selectedDate = pickedDate);
+                  }
                 },
-                child: const Text('Select Date'),
               ),
               const SizedBox(height: 16),
               Row(

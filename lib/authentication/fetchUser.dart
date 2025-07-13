@@ -16,7 +16,6 @@ Future<Map<String, dynamic>?> fetchUserData() async {
     }
     return null;
   } catch (e) {
-    print('Error fetching user data: $e');
     return null;
   }
 }

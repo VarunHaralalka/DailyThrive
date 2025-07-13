@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'attendance_mark_dialog.dart';
 import 'attendance_by_subject.dart';
+import '../ConfirmationModal.dart';
 
 class AttendanceActions extends StatelessWidget {
   final String userId;
@@ -123,14 +124,23 @@ class AttendanceActions extends StatelessWidget {
                       ? null
                       : () async {
                           // Delete all records for this subject
-                          final recordsRef =
-                              subjRef.doc(selected).collection('records');
-                          final recordsSnap = await recordsRef.get();
-                          for (var doc in recordsSnap.docs) {
-                            await doc.reference.delete();
+                          final confirmed = await showConfirmationDialog(
+                            context,
+                            content:
+                                'Are you sure you want to delete this subject and all its attendance records?',
+                            confirmLabel: 'Delete',
+                          );
+                          if (confirmed == true) {
+                            // Delete logic...
+                            final recordsRef =
+                                subjRef.doc(selected).collection('records');
+                            final recordsSnap = await recordsRef.get();
+                            for (var doc in recordsSnap.docs) {
+                              await doc.reference.delete();
+                            }
+                            await subjRef.doc(selected).delete();
+                            Navigator.pop(context);
                           }
-                          await subjRef.doc(selected).delete();
-                          Navigator.pop(context);
                         },
                   child: const Text('Delete'),
                 ),
